@@ -49,47 +49,67 @@ export default defineNuxtConfig({
     },
     langDir: 'locales',
     lazy: true,
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://myrentacar.test:3000',
+    prefixDefaultLocales: ['en'],
     locales: [
       {
         code: 'en',
         language: 'en-US',
         file: 'en.json',
-        // domain: 'localhost',
-        name: 'English'
+        domain: 'http://myrentacar.test:3000',
+        name: 'English',
+        domainDefault: true,
+        shouldLocalize: false
       },
       {
         code: 'en-GB',
         language: 'en-GB',
         files: ['en.json', 'en-GB.js', 'en-KK.js', 'en-US.yaml', 'en-CA.json5'],
-        name: 'English (UK)'
+        name: 'English (UK)',
+        domain: 'http://myrentacar.test:3000'
+      },
+
+      {
+        code: 'ru',
+        language: 'ru-RU',
+        file: 'ja.ts',
+        name: 'Русский',
+        domain: 'http://myrentacar.test:3000'
+        // domainDefault: true,
       },
       {
-        code: 'ja',
-        language: 'ja-JP',
-        file: 'ja.ts',
-        domain: 'mydomain.com',
-        name: 'Japanese'
+        code: 'nl',
+        language: 'nl-NL',
+        file: 'nl.json',
+        // domain: 'localhost',
+        name: 'Nederlands',
+        domain: 'http://myrentacar.testpl:3000',
+        domainDefault: true
       },
       {
         code: 'fr',
         language: 'fr-FR',
         file: 'fr.json',
-        domain: 'project-fr.example.com',
-        name: 'Français'
+        name: 'Français',
+        domain: 'http://myrentacar.testde:3000',
+        domainDefault: true
       }
     ],
     defaultLocale: 'en',
-    pages: {
-      history: {
-        ja: '/history-ja'
-      },
-      about: {
-        ja: '/about-ja'
-      }
-    },
+    // pages: {
+    //   history: {
+    //     ru: '/history-ja'
+    //   },
+    //   about: {
+    //     ru: '/about-ja'
+    //   }
+    // },
     skipSettingLocaleOnNavigate: true,
-    detectBrowserLanguage: false,
+    detectBrowserLanguage: {
+      useCookie: false,
+      forDomains: ['http://myrentacar.test:3000']
+    },
+    differentDomains: true,
     // detectBrowserLanguage: {
     //   // useCookie: true
     //   // alwaysRedirect: true
@@ -97,6 +117,14 @@ export default defineNuxtConfig({
     //   // // cookieKey: 'my_custom_cookie_name',
     //   // redirectOn: 'root'
     // },
-    vueI18n: 'vue-i18n.options.ts'
-  }
+    vueI18n: 'vue-i18n.options.ts',
+    strategy: 'prefix_except_default'
+  },
+
+  devServer: {
+    host: 'myrentacar.test',
+    port: 3000
+  },
+
+  compatibilityDate: '2024-10-25'
 })

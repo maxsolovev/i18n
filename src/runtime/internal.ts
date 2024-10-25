@@ -185,9 +185,13 @@ export function detectBrowserLanguage(
 ): DetectBrowserLanguageFromResult {
   const logger = /*#__PURE__*/ createLogger('detectBrowserLanguage')
   const _detect = runtimeDetectBrowserLanguage()
+  const host = getHost()
+  const detectOnDomains = (useRuntimeConfig().public.i18n?.detectBrowserLanguage?.forDomains || []).map(
+    domain => new URL(domain).host
+  )
 
   // feature is disabled
-  if (!_detect) {
+  if (!_detect || !detectOnDomains.includes(host)) {
     return DefaultDetectBrowserLanguageFromResult
   }
 
