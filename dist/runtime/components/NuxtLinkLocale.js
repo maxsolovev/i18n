@@ -2,7 +2,8 @@ import { useLocalePath } from "#i18n";
 import { defineComponent, computed, h } from "vue";
 import { defineNuxtLink } from "#imports";
 import { hasProtocol } from "ufo";
-const NuxtLinkLocale = defineNuxtLink({ componentName: "NuxtLinkLocale" });
+import { nuxtLinkDefaults } from "#build/nuxt.config.mjs";
+const NuxtLinkLocale = defineNuxtLink({ ...nuxtLinkDefaults, componentName: "NuxtLinkLocale" });
 export default defineComponent({
   name: "NuxtLinkLocale",
   props: {

@@ -2,7 +2,8 @@ import { SWITCH_LOCALE_PATH_LINK_IDENTIFIER } from "#build/i18n.options.mjs";
 import { useSwitchLocalePath } from "#i18n";
 import { defineNuxtLink } from "#imports";
 import { Comment, defineComponent, h } from "vue";
-const NuxtLink = defineNuxtLink({ componentName: "NuxtLink" });
+import { nuxtLinkDefaults } from "#build/nuxt.config.mjs";
+const NuxtLink = defineNuxtLink({ ...nuxtLinkDefaults, componentName: "NuxtLink" });
 export default defineComponent({
   name: "SwitchLocalePathLink",
   props: {

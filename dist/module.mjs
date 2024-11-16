@@ -1,4 +1,4 @@
-import { tryResolveModule, resolvePath, useNuxt, useLogger, extendPages, addTemplate, addWebpackPlugin, addVitePlugin, extendViteConfig, addServerPlugin, createResolver, addPlugin, addTypeTemplate, addComponent, addImports, addServerHandler, useNitro, updateTemplates, defineNuxtModule } from '@nuxt/kit';
+import { tryResolveModule, resolvePath, useNuxt, useLogger, addTemplate, addWebpackPlugin, addVitePlugin, extendViteConfig, addServerPlugin, createResolver, addPlugin, addTypeTemplate, addComponent, addImports, addServerHandler, useNitro, updateTemplates, defineNuxtModule } from '@nuxt/kit';
 import createDebug from 'debug';
 import { STRATEGY_PREFIX_EXCEPT_DEFAULT } from '../dist/runtime/shared-types.js';
 export * from '../dist/runtime/shared-types.js';
@@ -375,7 +375,7 @@ function toCode(code) {
 function stringifyObj(obj) {
   return `Object({${Object.entries(obj).map(([key, value]) => `${JSON.stringify(key)}:${toCode(value)}`).join(`,`)}})`;
 }
-const PARAM_CHAR_RE = /[\w\d_.]/;
+const PARAM_CHAR_RE = /[\w.]/;
 function parseSegment(segment) {
   let state = 0 /* initial */;
   let i = 0;
@@ -389,7 +389,7 @@ function parseSegment(segment) {
       throw new Error("wrong state");
     }
     tokens.push({
-      type: state === 1 /* static */ ? 0 /* static */ : state === 2 /* dynamic */ ? 1 /* dynamic */ : state === 3 /* optional */ ? 2 /* optional */ : 3 /* catchall */,
+      type: state === 1 /* static */ ? 0 /* static */ : state === 2 /* dynamic */ ? 1 /* dynamic */ : state === 3 /* optional */ ? 2 /* optional */ : state === 4 /* catchall */ ? 3 /* catchall */ : 4 /* group */,
       value: buffer
     });
     buffer = "";
@@ -401,6 +401,8 @@ function parseSegment(segment) {
         buffer = "";
         if (c === "[") {
           state = 2 /* dynamic */;
+        } else if (c === "(") {
+          state = 5 /* group */;
         } else {
           i--;
           state = 1 /* static */;
@@ -410,6 +412,9 @@ function parseSegment(segment) {
         if (c === "[") {
           consumeBuffer();
           state = 2 /* dynamic */;
+        } else if (c === "(") {
+          consumeBuffer();
+          state = 5 /* group */;
         } else {
           buffer += c;
         }
@@ -417,6 +422,7 @@ function parseSegment(segment) {
       case 4 /* catchall */:
       case 2 /* dynamic */:
       case 3 /* optional */:
+      case 5 /* group */:
         if (buffer === "...") {
           buffer = "";
           state = 4 /* catchall */;
@@ -431,7 +437,14 @@ function parseSegment(segment) {
             consumeBuffer();
           }
           state = 0 /* initial */;
-        } else if (PARAM_CHAR_RE.test(c)) {
+        } else if (c === ")" && state === 5 /* group */) {
+          if (!buffer) {
+            throw new Error("Empty group");
+          } else {
+            consumeBuffer();
+          }
+          state = 0 /* initial */;
+        } else if (c && PARAM_CHAR_RE.test(c)) {
           buffer += c;
         } else ;
         break;
@@ -516,9 +529,10 @@ const mergeI18nModules = async (options, nuxt) => {
     options.locales = mergedLocales;
   }
 };
+const COLON_RE = /:/g;
 function getRoutePath(tokens) {
   return tokens.reduce((path, token) => {
-    return path + (token.type === 2 /* optional */ ? `:${token.value}?` : token.type === 1 /* dynamic */ ? `:${token.value}()` : token.type === 3 /* catchall */ ? `:${token.value}(.*)*` : encodePath(token.value).replace(/:/g, "\\:"));
+    return path + (token.type === 2 /* optional */ ? `:${token.value}?` : token.type === 1 /* dynamic */ ? `:${token.value}()` : token.type === 3 /* catchall */ ? `:${token.value}(.*)*` : token.type === 4 /* group */ ? "" : encodePath(token.value).replace(COLON_RE, "\\:"));
   }, "/");
 }
 function getHash(text) {
@@ -818,7 +832,8 @@ async function setupPages({ localeCodes, options, isSSR }, nuxt) {
   const srcDir = nuxt.options.srcDir;
   debug$8(`pagesDir: ${pagesDir}, srcDir: ${srcDir}, trailingSlash: ${options.trailingSlash}`);
   const typedRouter = await setupExperimentalTypedRoutes(options, nuxt);
-  extendPages(async (pages) => {
+  const pagesHook = nuxt.options.experimental.scanPageMeta === "after-resolve" ? "pages:resolved" : "pages:extend";
+  nuxt.hook(pagesHook, async (pages) => {
     debug$8("pages making ...", pages);
     const ctx = {
       stack: [],
@@ -2087,7 +2102,7 @@ function generateInterface(obj, indentLevel = 1) {
     if (!Object.prototype.hasOwnProperty.call(obj, key))
       continue;
     if (typeof obj[key] === "object" && obj[key] !== null && !Array.isArray(obj[key])) {
-      str += `${indent}${key}: {
+      str += `${indent}"${key}": {
 `;
       str += generateInterface(obj[key], indentLevel + 1);
       str += `${indent}};
@@ -2097,7 +2112,7 @@ function generateInterface(obj, indentLevel = 1) {
       if (propertyType === "function") {
         propertyType = "() => string";
       }
-      str += `${indent}${key}: ${propertyType};
+      str += `${indent}"${key}": ${propertyType};
 `;
     }
   }
