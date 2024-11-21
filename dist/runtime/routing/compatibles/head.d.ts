@@ -1,4 +1,4 @@
-import type { I18nHeadMetaInfo, MetaAttrs, LocaleObject, I18nHeadOptions } from '../../shared-types.js';
+import type { I18nHeadMetaInfo, MetaAttrs, LocaleObject, I18nHeadOptions } from '#internal-i18n-types';
 import type { CommonComposableOptions } from '../../utils.js';
 /**
  * Returns localized head properties for locale-related aspects.

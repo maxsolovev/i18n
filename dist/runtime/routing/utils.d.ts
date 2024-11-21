@@ -1,4 +1,4 @@
-import type { LocaleObject, Strategies, BaseUrlResolveHandler } from '../shared-types.js';
+import type { LocaleObject, Strategies, BaseUrlResolveHandler } from '#internal-i18n-types';
 import type { Locale } from 'vue-i18n';
 export declare const inBrowser: boolean;
 export declare function getNormalizedLocales(locales: Locale[] | LocaleObject[]): LocaleObject[];

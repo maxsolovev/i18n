@@ -1,9 +1,9 @@
 import { type CommonComposableOptions } from './utils.js';
 import type { Locale } from 'vue-i18n';
-import type { DetectBrowserLanguageOptions, LocaleObject } from './shared-types.js';
+import type { DetectBrowserLanguageOptions, LocaleObject } from '#internal-i18n-types';
 import type { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router';
 import type { CookieRef, NuxtApp } from 'nuxt/app';
-import type { I18nPublicRuntimeConfig } from './shared-types.js';
+import type { I18nPublicRuntimeConfig } from '#internal-i18n-types';
 export declare function formatMessage(message: string): string;
 export declare function defineGetter<K extends string | number | symbol, V>(obj: Record<K, V>, key: K, val: V): void;
 type TailParameters<T> = T extends (first: CommonComposableOptions, ...rest: infer R) => unknown ? R : never;

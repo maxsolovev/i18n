@@ -1,6 +1,6 @@
 import type { Locale } from 'vue-i18n';
 import type { RouteLocationNormalizedLoaded, RouteLocationPathRaw } from 'vue-router';
-import type { Strategies } from '../../shared-types.js';
+import type { Strategies } from '#internal-i18n-types';
 import type { CommonComposableOptions } from '../../utils.js';
 /**
  * NOTE:

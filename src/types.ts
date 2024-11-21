@@ -35,6 +35,7 @@ export interface DetectBrowserLanguageOptions {
   fallbackLocale?: Locale | null
   redirectOn?: RedirectOnOptions
   useCookie?: boolean
+  forDomains?: string[]
 }
 
 export type LocaleType = 'static' | 'dynamic' | 'unknown'
@@ -212,6 +213,7 @@ export type NuxtI18nOptions<
    * @defaultValue '' (empty string)
    */
   defaultLocale?: Locale
+  prefixDefaultLocales: Locale[]
   /**
    * List of locales supported by your app
    *

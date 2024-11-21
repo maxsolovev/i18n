@@ -1,7 +1,7 @@
 import type { I18nOptions, Locale, FallbackLocale, LocaleMessages, DefineLocaleMessage } from 'vue-i18n';
 import type { NuxtApp } from '#app';
 import type { DeepRequired } from 'ts-essentials';
-import type { VueI18nConfig, NuxtI18nOptions } from './shared-types.js';
+import type { VueI18nConfig, NuxtI18nOptions } from '#internal-i18n-types';
 import type { CoreContext } from '@intlify/h3';
 type MessageLoaderFunction<T = DefineLocaleMessage> = (locale: Locale) => Promise<LocaleMessages<T>>;
 type MessageLoaderResult<T, Result = MessageLoaderFunction<T> | LocaleMessages<T>> = {

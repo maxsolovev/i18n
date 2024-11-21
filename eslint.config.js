@@ -12,6 +12,7 @@ export default [
   // ignores
   {
     ignores: [
+      'src',
       '.nuxt',
       'dist',
       'playground',

@@ -6,8 +6,8 @@ import type { DetectLocaleContext } from './internal.js';
 import type { HeadSafe } from '@unhead/vue';
 import type { RouteLocationNormalized, RouteLocationNormalizedLoaded } from 'vue-router';
 import type { RuntimeConfig } from 'nuxt/schema';
-import type { I18nPublicRuntimeConfig } from './shared-types.js';
-import type { PrefixableOptions, SwitchLocalePathIntercepter, BaseUrlResolveHandler, Strategies, LocaleObject } from './shared-types.js';
+import type { I18nPublicRuntimeConfig } from '#internal-i18n-types';
+import type { PrefixableOptions, SwitchLocalePathIntercepter, BaseUrlResolveHandler, Strategies, LocaleObject } from '#internal-i18n-types';
 /**
  * Common options used internally by composable functions, these
  * are initialized when calling a wrapped composable function.

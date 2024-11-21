@@ -1,7 +1,7 @@
 import { localeHead } from '../routing/compatibles/head.js';
 import type { Ref } from 'vue';
 import type { Locale } from 'vue-i18n';
-import type { I18nHeadMetaInfo, I18nHeadOptions, SeoAttributesOptions } from '../shared-types.js';
+import type { I18nHeadMetaInfo, I18nHeadOptions, SeoAttributesOptions } from '#internal-i18n-types';
 import type { RouteLocationAsRelativeI18n, RouteLocationResolvedI18n, RouteMapI18n } from 'vue-router';
 export * from 'vue-i18n';
 export * from './shared.js';

@@ -1,5 +1,5 @@
 import { type CommonComposableOptions } from '../../utils.js';
-import type { PrefixableOptions } from '../../shared-types.js';
+import type { PrefixableOptions } from '#internal-i18n-types';
 import type { Locale } from 'vue-i18n';
 import type { RouteLocation, RouteLocationRaw, Router, RouteLocationNormalizedLoaded, RouteLocationNormalized } from 'vue-router';
 declare function prefixable(options: PrefixableOptions): boolean;
