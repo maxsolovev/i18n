@@ -27,9 +27,13 @@ export default defineNuxtConfig({
     }
   },
 
-  extends: ['layers/i18n-layer'],
+  // extends: ['layers/i18n-layer'],
 
-  modules: [Module1, ModuleExperimental, LayerModule, '@nuxtjs/i18n', '@nuxt/devtools'],
+  modules: [
+    //Module1, ModuleExperimental, LayerModule,
+    '@nuxtjs/i18n',
+    '@nuxt/devtools'
+  ],
 
   // debug: false,
 
@@ -37,8 +41,8 @@ export default defineNuxtConfig({
     debug: false,
     // restructureDir: 'i18n',
     experimental: {
-      localeDetector: './localeDetector.ts',
-      switchLocalePathLinkSSR: true,
+      // localeDetector: './localeDetector.ts',
+      // switchLocalePathLinkSSR: true,
       autoImportTranslationFunctions: true,
       typedPages: true,
       typedOptionsAndMessages: 'default',
@@ -78,15 +82,15 @@ export default defineNuxtConfig({
         domain: 'http://myrentacar.test:3000'
         // domainDefault: true,
       },
-      {
-        code: 'nl',
-        language: 'nl-NL',
-        file: 'nl.json',
-        // domain: 'localhost',
-        name: 'Nederlands',
-        domain: 'http://myrentacar.testpl:3000',
-        domainDefault: true
-      },
+      // {
+      //   code: 'nl',
+      //   language: 'nl-NL',
+      //   file: 'nl.json',
+      //   // domain: 'localhost',
+      //   name: 'Nederlands',
+      //   domain: 'http://myrentacar.testpl:3000',
+      //   domainDefault: true
+      // },
       {
         code: 'fr',
         language: 'fr-FR',
@@ -105,7 +109,7 @@ export default defineNuxtConfig({
     //     ru: '/about-ja'
     //   }
     // },
-    skipSettingLocaleOnNavigate: true,
+    // skipSettingLocaleOnNavigate: true,
     detectBrowserLanguage: {
       useCookie: false,
       forDomains: ['http://myrentacar.test:3000']
@@ -118,7 +122,7 @@ export default defineNuxtConfig({
     //   // // cookieKey: 'my_custom_cookie_name',
     //   // redirectOn: 'root'
     // },
-    vueI18n: 'vue-i18n.options.ts',
+    // vueI18n: 'vue-i18n.options.ts',
     strategy: 'prefix_except_default'
   },
 
