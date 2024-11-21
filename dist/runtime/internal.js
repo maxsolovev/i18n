@@ -116,8 +116,7 @@ export function detectBrowserLanguage(route, detectLocaleContext, locale = "") {
   const detectOnDomains = (useRuntimeConfig().public.i18n?.detectBrowserLanguage?.forDomains || []).map(
     (domain) => new URL(domain).host
   );
-  const isNeedToDetectLanguage = host ? detectOnDomains.includes(host) : false;
-  if (!_detect || !isNeedToDetectLanguage) {
+  if (!_detect || !detectOnDomains.includes(host)) {
     return DefaultDetectBrowserLanguageFromResult;
   }
   const { strategy } = useRuntimeConfig().public.i18n;
@@ -126,7 +125,7 @@ export function detectBrowserLanguage(route, detectLocaleContext, locale = "") {
   if (isSSG && strategy === "no_prefix" && (import.meta.server || ssg === "ssg_ignore")) {
     return { locale: "", reason: "detect_ignore_on_ssg" /* SSG_IGNORE */ };
   }
-  if (!firstAccess && !isNeedToDetectLanguage) {
+  if (!firstAccess) {
     return { locale: strategy === "no_prefix" ? locale : "", reason: "first_access_only" /* FIRST_ACCESS */ };
   }
   const { redirectOn, alwaysRedirect, useCookie, fallbackLocale } = _detect;
