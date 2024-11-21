@@ -1,7 +1,7 @@
 {
   "name": "@nuxtjs/i18n",
   "type": "module",
-  "version": "9.0.0",
+  "version": "9.1.0",
   "packageManager": "pnpm@9.4.0",
   "description": "Internationalization for Nuxt",
   "contributors": [
@@ -120,6 +120,7 @@
     "@unhead/vue": "^1.8.8",
     "bumpp": "^9.4.1",
     "changelogithub": "^0.13.7",
+    "chokidar": "^4.0.1",
     "consola": "^3",
     "eslint": "^9.5.0",
     "eslint-config-prettier": "^9.1.0",
