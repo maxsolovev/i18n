@@ -186,12 +186,15 @@ export function detectBrowserLanguage(
   const logger = /*#__PURE__*/ createLogger('detectBrowserLanguage')
   const _detect = runtimeDetectBrowserLanguage()
   const host = getHost()
-  const detectOnDomains = (useRuntimeConfig().public.i18n?.detectBrowserLanguage?.forDomains || []).map(
-    domain => new URL(domain).host
+
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment,@typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access
+  const detectOnDomains: string[] = (useRuntimeConfig().public.i18n?.detectBrowserLanguage?.forDomains || []).map(
+    (domain: URL) => new URL(domain).host
   )
+  const isNeedToDetectLanguage = host ? detectOnDomains.includes(host) : false
 
   // feature is disabled
-  if (!_detect || !detectOnDomains.includes(host)) {
+  if (!_detect || !isNeedToDetectLanguage) {
     return DefaultDetectBrowserLanguageFromResult
   }
 
@@ -206,7 +209,7 @@ export function detectBrowserLanguage(
   }
 
   // detection only on first access
-  if (!firstAccess) {
+  if (!firstAccess && !isNeedToDetectLanguage) {
     return { locale: strategy === 'no_prefix' ? locale : '', reason: DetectFailure.FIRST_ACCESS }
   }
 
