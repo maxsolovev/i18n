@@ -177,7 +177,7 @@ export function localizeRoutes(routes: NuxtPage[], options: LocalizeRoutesParams
         ) {
           localizedRoutes.push({
             ...localized,
-            name: `${localized.name}___default`
+            name: `${localized.name}___${options.defaultLocaleRouteNameSuffix}`
           })
         }
 
