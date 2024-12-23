@@ -108,12 +108,12 @@ export async function loadAndSetLocale(
   // no change if different domains option enabled
   if (!initial && differentDomains) {
     syncCookie()
-    return false
+    // return false
   }
 
   if (oldLocale === newLocale) {
     syncCookie()
-    // return false
+    return false
   }
 
   // call `onBeforeLanguageSwitch` which may return an override for `newLocale`
@@ -281,8 +281,15 @@ export async function navigate(
   { status = 302, enableNavigate = false }: { status?: number; enableNavigate?: boolean } = {}
 ) {
   const { nuxtApp, i18n, locale, route } = args
-  const { rootRedirect, differentDomains, multiDomainLocales, skipSettingLocaleOnNavigate, locales, strategy } = nuxtApp
-    .$config.public.i18n as I18nPublicRuntimeConfig
+  const {
+    rootRedirect,
+    differentDomains,
+    detectBrowserLanguage,
+    multiDomainLocales,
+    skipSettingLocaleOnNavigate,
+    locales,
+    strategy
+  } = nuxtApp.$config.public.i18n as I18nPublicRuntimeConfig
   const logger = /*#__PURE__*/ createLogger('navigate')
   let { redirectPath } = args
 
@@ -374,13 +381,13 @@ export async function navigate(
     const isSameHosts = localeHost === currentHost
 
     // misc
-    const isDomainNeedsPrefix = localeDomain && detectBrowserLanguage.forDomains?.includes(localeDomain)
+    const isDomainNeedsPrefix = !!localeDomain && !!detectBrowserLanguage.forDomains?.includes(localeDomain)
 
     // conditions
     const isRedirectToLangPath =
       isSameHosts &&
       ((isPathWithoutLocale && isDomainNeedsPrefix) || (!!localeFromPath && detectedLocale !== localeFromPath))
-    const preventRedirect = isSameHosts && isDomainNeedsPrefix && isPathStartsWithRouteLocale
+    const preventRedirect = !isRedirectToLangPath && isSameHosts && isDomainNeedsPrefix && isPathStartsWithRouteLocale
     const redirectCondition = (!isSameHosts || isRedirectToLangPath) && !preventRedirect
 
     if (redirectCondition) {

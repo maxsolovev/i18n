@@ -48,6 +48,7 @@ export default defineNuxtConfig({
       typedOptionsAndMessages: 'default',
       generatedLocaleFilePathFormat: 'relative'
     },
+    trailingSlash: true,
     compilation: {
       strictMessage: false,
       escapeHtml: true

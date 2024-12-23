@@ -61,10 +61,10 @@ export async function loadAndSetLocale(newLocale, i18n, runtimeI18n, initial = f
   }
   if (!initial && differentDomains) {
     syncCookie();
-    return false;
   }
   if (oldLocale === newLocale) {
     syncCookie();
+    return false;
   }
   const localeOverride = await onBeforeLanguageSwitch(i18n, oldLocale, newLocale, initial, nuxtApp);
   if (localeOverride && localeCodes.includes(localeOverride)) {
@@ -145,7 +145,15 @@ function _navigate(redirectPath, status, external) {
 }
 export async function navigate(args, { status = 302, enableNavigate = false } = {}) {
   const { nuxtApp, i18n, locale, route } = args;
-  const { rootRedirect, differentDomains, multiDomainLocales, skipSettingLocaleOnNavigate, locales, strategy } = nuxtApp.$config.public.i18n;
+  const {
+    rootRedirect,
+    differentDomains,
+    detectBrowserLanguage: detectBrowserLanguage2,
+    multiDomainLocales,
+    skipSettingLocaleOnNavigate,
+    locales,
+    strategy
+  } = nuxtApp.$config.public.i18n;
   const logger = /* @__PURE__ */ createLogger("navigate");
   let { redirectPath } = args;
   __DEBUG__ && logger.log("options", {
@@ -217,9 +225,9 @@ export async function navigate(args, { status = 302, enableNavigate = false } = 
     const localeDomain = localeFromPath ? getDomainFromLocale(localeFromPath) : detectedLocaleDomain;
     const localeHost = localeDomain ? new URL(localeDomain).host : detectedLocaleHost;
     const isSameHosts = localeHost === currentHost;
-    const isDomainNeedsPrefix = localeDomain && detectBrowserLanguage.forDomains?.includes(localeDomain);
+    const isDomainNeedsPrefix = !!localeDomain && !!detectBrowserLanguage2.forDomains?.includes(localeDomain);
     const isRedirectToLangPath = isSameHosts && (isPathWithoutLocale && isDomainNeedsPrefix || !!localeFromPath && detectedLocale !== localeFromPath);
-    const preventRedirect = isSameHosts && isDomainNeedsPrefix && isPathStartsWithRouteLocale;
+    const preventRedirect = !isRedirectToLangPath && isSameHosts && isDomainNeedsPrefix && isPathStartsWithRouteLocale;
     const redirectCondition = (!isSameHosts || isRedirectToLangPath) && !preventRedirect;
     if (redirectCondition) {
       let path = isPathStartsWithRouteLocale ? route.path.replace(`/${localeFromPath}`, "") : route.path;
