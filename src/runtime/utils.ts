@@ -386,6 +386,7 @@ export async function navigate(
     // conditions
     const isRedirectToLangPath =
       isSameHosts &&
+      !isRootPath &&
       ((isPathWithoutLocale && isDomainNeedsPrefix) || (!!localeFromPath && detectedLocale !== localeFromPath))
     const preventRedirect = !isRedirectToLangPath && isSameHosts && isDomainNeedsPrefix && isPathStartsWithRouteLocale
     const redirectCondition = (!isSameHosts || isRedirectToLangPath) && !preventRedirect

@@ -226,7 +226,7 @@ export async function navigate(args, { status = 302, enableNavigate = false } = 
     const localeHost = localeDomain ? new URL(localeDomain).host : detectedLocaleHost;
     const isSameHosts = localeHost === currentHost;
     const isDomainNeedsPrefix = !!localeDomain && !!detectBrowserLanguage2.forDomains?.includes(localeDomain);
-    const isRedirectToLangPath = isSameHosts && (isPathWithoutLocale && isDomainNeedsPrefix || !!localeFromPath && detectedLocale !== localeFromPath);
+    const isRedirectToLangPath = isSameHosts && !isRootPath && (isPathWithoutLocale && isDomainNeedsPrefix || !!localeFromPath && detectedLocale !== localeFromPath);
     const preventRedirect = !isRedirectToLangPath && isSameHosts && isDomainNeedsPrefix && isPathStartsWithRouteLocale;
     const redirectCondition = (!isSameHosts || isRedirectToLangPath) && !preventRedirect;
     if (redirectCondition) {
