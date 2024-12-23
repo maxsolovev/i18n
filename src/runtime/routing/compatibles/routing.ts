@@ -86,6 +86,30 @@ export function localePath(
   return localizedRoute == null ? '' : localizedRoute.redirectedFrom?.fullPath || localizedRoute.fullPath
 }
 
+// /**
+//  * Returns localized path for passed in route.
+//  *
+//  * @remarks
+//  * If locale is not specified, uses current locale.
+//  *
+//  * @param route - A route.
+//  * @param locale - A locale, optional.
+//  *
+//  * @returns A path of the current route.
+//  *
+//  * @public
+//  */
+export function localeDomain(common: CommonComposableOptions, locale?: Locale): string | undefined {
+  if (!locale) return undefined
+
+  const { i18n } = common
+
+  const currentDomain = i18n.localeProperties.value?.domain
+  const localeDomain = i18n.locales.value.find((l: object) => l.code === locale)?.domain
+
+  return currentDomain !== localeDomain ? localeDomain : undefined
+}
+
 /**
  * Returns localized route for passed in `route` parameters.
  *

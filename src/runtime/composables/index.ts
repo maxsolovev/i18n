@@ -14,6 +14,7 @@ import {
 } from '../routing/compatibles/head'
 import {
   getRouteBaseName,
+  localeDomain,
   localeLocation,
   localePath,
   localeRoute,
@@ -265,6 +266,9 @@ export function useLocalePath(): LocalePathFunction {
   // @ts-expect-error - generated types conflict with the generic types we accept
   return wrapComposable(localePath)
 }
+export function useLocaleDomain(): LocaleFunction {
+  return wrapComposable(localeDomain)
+}
 
 /**
  * The function that resolve route.
@@ -291,6 +295,8 @@ export type LocaleRouteFunction = <Name extends keyof RouteMapI18n = keyof Route
   // | RouteLocationAsPathI18n
   locale?: Locale
 ) => RouteLocationResolvedI18n<Name> | undefined
+
+export type LocaleFunction = (locale?: Locale) => string | undefined
 /**
  * The `useLocaleRoute` composable returns function that resolve the locale route.
  *

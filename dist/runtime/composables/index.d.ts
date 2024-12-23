@@ -108,6 +108,7 @@ locale?: Locale) => string;
  * @public
  */
 export declare function useLocalePath(): LocalePathFunction;
+export declare function useLocaleDomain(): LocaleFunction;
 /**
  * The function that resolve route.
  *
@@ -131,6 +132,7 @@ export type LocaleRouteFunction = <Name extends keyof RouteMapI18n = keyof Route
  * this can be enabled again after route resolve has been improved.
  */
 locale?: Locale) => RouteLocationResolvedI18n<Name> | undefined;
+export type LocaleFunction = (locale?: Locale) => string | undefined;
 /**
  * The `useLocaleRoute` composable returns function that resolve the locale route.
  *

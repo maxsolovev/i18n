@@ -53,7 +53,8 @@ const DEFAULT_OPTIONS = {
     compositionOnly: true,
     runtimeOnly: false,
     fullInstall: true,
-    dropMessageCompiler: false
+    dropMessageCompiler: false,
+    optimizeTranslationDirective: true
   },
   compilation: {
     jit: true,
@@ -639,7 +640,7 @@ function localizeRoutes(routes, options) {
         if (options.multiDomainLocales && (options.strategy === "prefix_except_default" || options.strategy === "prefix_and_default")) {
           localizedRoutes.push({
             ...localized,
-            name: `${localized.name}___default`
+            name: `${localized.name}___${options.defaultLocaleRouteNameSuffix}`
           });
         }
         localized.path = join("/", locale, localized.path);
@@ -1436,7 +1437,7 @@ async function extendBundler({ options: nuxtOptions }, nuxt) {
       compositionOnly: nuxtOptions.bundle.compositionOnly,
       onlyLocales: nuxtOptions.bundle.onlyLocales,
       dropMessageCompiler: nuxtOptions.bundle.dropMessageCompiler,
-      optimizeTranslationDirective: true,
+      optimizeTranslationDirective: nuxtOptions.bundle.optimizeTranslationDirective,
       strictMessage: nuxtOptions.compilation.strictMessage,
       escapeHtml: nuxtOptions.compilation.escapeHtml,
       include: localeIncludePaths
@@ -1463,7 +1464,7 @@ async function extendBundler({ options: nuxtOptions }, nuxt) {
     fullInstall: nuxtOptions.bundle.fullInstall,
     onlyLocales: nuxtOptions.bundle.onlyLocales,
     dropMessageCompiler: nuxtOptions.bundle.dropMessageCompiler,
-    optimizeTranslationDirective: true,
+    optimizeTranslationDirective: nuxtOptions.bundle.optimizeTranslationDirective,
     strictMessage: nuxtOptions.compilation.strictMessage,
     escapeHtml: nuxtOptions.compilation.escapeHtml,
     defaultSFCLang: nuxtOptions.customBlocks.defaultSFCLang,

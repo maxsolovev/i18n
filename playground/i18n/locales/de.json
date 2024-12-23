@@ -1,0 +1,14 @@
+{
+  "layouts": {
+    "title": "Page - {title}"
+  },
+  "pages": {
+    "title": {
+      "top": "Top",
+      "about": "à propos de ce site"
+    }
+  },
+  "welcome": "Deutch",
+  "hello": "Bonjour {name} !",
+  "items": []
+}

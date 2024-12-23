@@ -1,6 +1,6 @@
-import Module1 from './app/module1'
-import LayerModule from './app/layer-module'
-import ModuleExperimental from './app/module-experimental'
+// import Module1 from './app/module1'
+// import LayerModule from './app/layer-module'
+// import ModuleExperimental from './app/module-experimental'
 import { fileURLToPath } from 'mlly'
 
 // https://nuxt.com/docs/guide/directory-structure/nuxt.config
@@ -38,7 +38,7 @@ export default defineNuxtConfig({
   // debug: false,
 
   i18n: {
-    debug: false,
+    debug: true,
     // restructureDir: 'i18n',
     experimental: {
       // localeDetector: './localeDetector.ts',
@@ -63,8 +63,7 @@ export default defineNuxtConfig({
         file: 'en.json',
         domain: 'http://myrentacar.test:3000',
         name: 'English',
-        domainDefault: true,
-        shouldLocalize: false
+        domainDefault: true
       },
       {
         code: 'en-GB',
@@ -96,6 +95,14 @@ export default defineNuxtConfig({
         language: 'fr-FR',
         file: 'fr.json',
         name: 'Français',
+        domain: 'http://myrentacar.testpl:3000',
+        domainDefault: true
+      },
+      {
+        code: 'de',
+        language: 'de-DE',
+        file: 'de.json',
+        name: 'Deutch',
         domain: 'http://myrentacar.testde:3000',
         domainDefault: true
       }

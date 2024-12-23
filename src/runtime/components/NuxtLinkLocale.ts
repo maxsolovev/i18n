@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { useLocalePath, type Locale } from '#i18n'
+import { useLocalePath, useLocaleDomain, type Locale } from '#i18n'
 import { defineComponent, computed, h } from 'vue'
 import { defineNuxtLink } from '#imports'
 import { hasProtocol } from 'ufo'
@@ -28,6 +28,7 @@ export default defineComponent<NuxtLinkLocaleProps>({
   },
   setup(props, { slots }) {
     const localePath = useLocalePath()
+    const domain = useLocaleDomain()
 
     // From https://github.com/nuxt/nuxt/blob/main/packages/nuxt/src/app/components/nuxt-link.ts#L57
     const checkPropConflicts = (
@@ -41,8 +42,13 @@ export default defineComponent<NuxtLinkLocaleProps>({
     }
 
     const resolvedPath = computed(() => {
-      const destination = props.to ?? props.href
-      return (destination != null ? localePath(destination, props.locale) : destination) as string
+      let destination = props.to ?? props.href
+      destination = (destination != null ? localePath(destination, props.locale) : destination) as string
+      const _domain = domain(props.locale)
+      if (_domain) {
+        destination = `${_domain}${destination}`
+      }
+      return destination
     })
 
     // Resolving link type

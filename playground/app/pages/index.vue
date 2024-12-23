@@ -85,6 +85,15 @@ definePageMeta({
         <li>
           <NuxtLinkLocale :to="{ name: 'products' }" class="products-link">Products</NuxtLinkLocale>
         </li>
+        <li>
+          <NuxtLinkLocale to="about" locale="en">About EN</NuxtLinkLocale>
+        </li>
+        <li>
+          <NuxtLinkLocale to="about" locale="ru">About RU</NuxtLinkLocale>
+        </li>
+        <li>
+          <NuxtLinkLocale to="about" locale="de">About DE</NuxtLinkLocale>
+        </li>
       </ul>
     </section>
     <section>

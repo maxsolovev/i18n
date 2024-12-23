@@ -14,6 +14,7 @@ import {
 } from "../routing/compatibles/head.js";
 import {
   getRouteBaseName,
+  localeDomain,
   localeLocation,
   localePath,
   localeRoute,
@@ -123,6 +124,9 @@ export function useRouteBaseName() {
 }
 export function useLocalePath() {
   return wrapComposable(localePath);
+}
+export function useLocaleDomain() {
+  return wrapComposable(localeDomain);
 }
 export function useLocaleRoute() {
   return wrapComposable(localeRoute);

@@ -268,13 +268,17 @@ export function setupMultiDomainLocales(nuxtContext, defaultLocaleDomain) {
   const defaultRouteSuffix = [routesNameSeparator, defaultLocaleRouteNameSuffix].join("");
   for (const route of router.getRoutes()) {
     const routeName = getRouteName(route.name);
-    if (!routeName.includes(defaultRouteSuffix)) continue;
-    const routeNameLocale = routeName.split(routesNameSeparator)[1];
-    if (routeNameLocale === defaultLocaleDomain) {
-      route.name = routeName.replace(defaultRouteSuffix, "");
+    if (routeName.endsWith(defaultRouteSuffix)) {
+      router.removeRoute(routeName);
       continue;
     }
-    router.removeRoute(route.name);
+    const routeNameLocale = routeName.split(routesNameSeparator)[1];
+    if (routeNameLocale === defaultLocaleDomain) {
+      router.addRoute({
+        ...route,
+        path: route.path === `/${routeNameLocale}` ? "/" : route.path.replace(`/${routeNameLocale}`, "")
+      });
+    }
   }
 }
 export function getDefaultLocaleForDomain(nuxtContext) {

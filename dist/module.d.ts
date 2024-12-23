@@ -114,7 +114,7 @@ interface ExperimentalFeatures {
      */
     generatedLocaleFilePathFormat?: 'absolute' | 'relative';
 }
-interface BundleOptions extends Pick<PluginOptions, 'compositionOnly' | 'runtimeOnly' | 'fullInstall' | 'dropMessageCompiler' | 'onlyLocales'> {
+interface BundleOptions extends Pick<PluginOptions, 'compositionOnly' | 'runtimeOnly' | 'fullInstall' | 'dropMessageCompiler' | 'onlyLocales' | 'optimizeTranslationDirective'> {
 }
 interface CustomBlocksOptions extends Pick<PluginOptions, 'defaultSFCLang' | 'globalSFCScope'> {
 }

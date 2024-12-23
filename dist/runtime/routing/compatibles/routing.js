@@ -30,6 +30,13 @@ export function localePath(common, route, locale) {
   const localizedRoute = resolveRoute(common, route, locale);
   return localizedRoute == null ? "" : localizedRoute.redirectedFrom?.fullPath || localizedRoute.fullPath;
 }
+export function localeDomain(common, locale) {
+  if (!locale) return void 0;
+  const { i18n } = common;
+  const currentDomain = i18n.localeProperties.value?.domain;
+  const localeDomain2 = i18n.locales.value.find((l) => l.code === locale)?.domain;
+  return currentDomain !== localeDomain2 ? localeDomain2 : void 0;
+}
 export function localeRoute(common, route, locale) {
   const resolved = resolveRoute(common, route, locale);
   return resolved ?? void 0;

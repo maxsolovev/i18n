@@ -1,4 +1,4 @@
-import { useLocalePath } from "#i18n";
+import { useLocalePath, useLocaleDomain } from "#i18n";
 import { defineComponent, computed, h } from "vue";
 import { defineNuxtLink } from "#imports";
 import { hasProtocol } from "ufo";
@@ -16,14 +16,20 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const localePath = useLocalePath();
+    const domain = useLocaleDomain();
     const checkPropConflicts = (props2, main, sub) => {
       if (import.meta.dev && props2[main] !== void 0 && props2[sub] !== void 0) {
         console.warn(`[NuxtLinkLocale] \`${main}\` and \`${sub}\` cannot be used together. \`${sub}\` will be ignored.`);
       }
     };
     const resolvedPath = computed(() => {
-      const destination = props.to ?? props.href;
-      return destination != null ? localePath(destination, props.locale) : destination;
+      let destination = props.to ?? props.href;
+      destination = destination != null ? localePath(destination, props.locale) : destination;
+      const _domain = domain(props.locale);
+      if (_domain) {
+        destination = `${_domain}${destination}`;
+      }
+      return destination;
     });
     const isExternal = computed(() => {
       if (props.external) {

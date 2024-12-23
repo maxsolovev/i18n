@@ -31,6 +31,7 @@ export declare function getRouteBaseName(common: CommonComposableOptions, givenR
  * @public
  */
 export declare function localePath(common: CommonComposableOptions, route: RouteLocationRaw, locale?: Locale): string;
+export declare function localeDomain(common: CommonComposableOptions, locale?: Locale): string | undefined;
 /**
  * Returns localized route for passed in `route` parameters.
  *
